@@ -29,12 +29,14 @@ function getSheetRows(sheetName)
     return data;
 }
 
-function getUser()
+function getUser(userEmail , userPassword)
 {
     let links = getSheetRows('Users');
-    return links;
-}
 
-function validUser(email , pass) {
-
+    if(links[0].Email == userEmail && links[0].Password == userPassword)
+    {
+        return true ;
+    }
+    console.log(links)
+    return false;
 }
