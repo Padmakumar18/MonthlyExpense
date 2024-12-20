@@ -5,6 +5,7 @@
   import Home from "./Components/Home.svelte";
   import Loading from "./Components/Loading.svelte";
   import toast, { Toaster } from 'svelte-french-toast';
+  import './CSS/App.css'
 
   let loading: boolean = true;
   let showLogin: boolean = true;
@@ -20,7 +21,9 @@
     if (email !== "" && password !== "") {
       handleLogin({ detail: { email, password } });
     }
-    loading = false ;
+    else {
+      loading = false ;
+    }
   });
 
   async function handleLogin(event?: { detail: { email: string; password: string }}) {
@@ -35,6 +38,7 @@
     
     if ( validUser ) {
       showLogin = false;
+      toast.success("Login successfully")
     }
     else {
       toast.error("Invalid Mail or Password")
@@ -45,34 +49,23 @@
   </script>
 
 <main>
-  <Home bind:loading bind:showLogin/>
-  <!-- <Toaster />
-  {#if loading}
-    <div class="loading">
-      <Loading />
-    </div>
-  {:else}
-    {#if showLogin}
-      <Login bind:email bind:password on:loginSubmit={handleLogin} />
-    {:else}
+  <div class = "{ !showLogin ? 'house' : 'house' }" >
     <Home bind:loading bind:showLogin/>
-    {/if}
-  {/if} -->
+    <Toaster />
+    <!-- {#if loading}
+      <div class="loadingComponent">
+        <Loading />
+      </div>
+    {:else}
+      {#if showLogin}
+        <Login bind:email bind:password on:loginSubmit={handleLogin} />
+      {:else}
+        <Home bind:loading bind:showLogin/>
+      {/if}
+    {/if} -->
+  </div>
 </main>
 
 <style>
 
-  main {
-    border: 1px solid black;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 1em;
-  }
-
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
 </style>

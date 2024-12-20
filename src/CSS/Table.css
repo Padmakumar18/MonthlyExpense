@@ -1,0 +1,59 @@
+.showValues {
+    border: 1px solid rgb(109, 109, 109);
+    border-radius: 1em;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  tr {
+    border-bottom: 1px solid #ccc;
+  }
+  
+  td {
+    padding: 8px 0;
+  }
+  
+  .left {
+    text-align: left;
+    width: 70%;
+  }
+  
+  .right {
+    text-align: right;
+    width: 30%;
+  }
+  
+  .edit {
+    display: flex;
+    justify-content: end;
+  }
+  
+  .editButton {
+    background-color: #2a8387;
+    background-image: linear-gradient(#37adb2, #329ca0);
+  }
+  
+  .editButton {
+    border:none;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 1px 1px;
+    color: #ffffff;
+    cursor: pointer;
+    display: block;
+    font-family: -apple-system, ".SFNSDisplay-Regular", "Helvetica Neue",
+      Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 11px 15px 12px;
+    text-align: center;
+    transition: box-shadow 0.05s ease-in-out, opacity 0.05s ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    letter-spacing: 2px;
+  }
