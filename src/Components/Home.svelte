@@ -3,6 +3,7 @@
   import type { dataType, homeFormValues } from "../type";
   import '../CSS/Home.css';
   import Table from "./Table.svelte";
+  import StudentForm from "./StudentForm.svelte";
 
   export let loading: boolean;
   export let showLogin: boolean;
@@ -43,6 +44,16 @@
     console.dir(formValue,{depth:null})
   }
 
+  function clearForm() {
+    formValue = {
+      date : new Date(),
+      subject : "",
+      amount : 0,
+      type : "",
+      typeOfType : ""
+    }
+  }
+
 </script>
 
 <main>
@@ -71,7 +82,7 @@
         <p class="profit">Total Expence = {totalExpence}</p>
       </div>
       <div class="col-lg-4">
-        <p class="profit">Balance = {balance}</p>
+        <p class="profit">Last month balance = {balance}</p>
       </div>
     </div>
 
@@ -105,9 +116,9 @@
                 bind:value={formValue.type}
                 required
               >
-                <option selected>Select option</option>
-                <option value="income">Income</option>
-                <option value="expense">Expense</option>
+                <option value="" selected>Select option</option>
+                <option value="Income">Income</option>
+                <option value="Expense">Expense</option>
               </select>
             </div>
 
@@ -117,30 +128,47 @@
                 class="form-select"
                 aria-label="Default select example"
                 bind:value={formValue.typeOfType}
-                required
-              >
-                <option selected>Select option</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                required >
+              <option value="" selected>Select option</option>
+              {#if formValue.type == "Income"}    
+              <optgroup label="Fees">
+                <option value="studentFee">Student fee </option>
+                <option value="clientFee">Client fee</option>
+              </optgroup>      
+              <optgroup label="Others">
+                <option value="officeIncome">Office income </option>
+                <option value="barrowedAmount">Barrowed amount </option>
+                <option value="collectedFromHelp">Collected from help </option>
+              </optgroup>      
+              {:else}
+                <option value="officeExpence">Office expence</option>
+                <option value="personalExpence">Personal expence</option>
+                <option value="returnBarrowed">Return barrowed</option>
+                <option value="helpingAmount">Helping amount</option>
+                <option value="investment">Investment</option>
+              {/if}
               </select>
             </div>
 
-            <div class="col-lg-12 ">
+            <div class="col-lg-12">
               <label class="mb-1" for="subject">Subject</label>
               <textarea
                 class="form-control"
                 name="subject"
                 id="subject"
                 bind:value={formValue.subject}
-                required
-              ></textarea>
+                placeholder="Subject....." required></textarea>
             </div>
+            {#if formValue.type == "Income" && formValue.typeOfType == "studentFee"}
+              <div class="col-lg-12 mt-3">
+                <StudentForm />
+              </div>
+            {/if}
 
             <div class="buttons mt-3">
               <div class="row">
                 <div class="col-lg-6">
-                  <button type="reset" class="clearButton">Clear</button>
+                  <button on:click={clearForm} type="reset" class="clearButton">Clear</button>
                 </div>
     
                 <div class="col-lg-6 submit">

@@ -7,7 +7,7 @@ export type dataType = {
     previousMonthAmount : number , 
     profit : number , 
     officeIncome : number ,
-    barrowedAmount_1 : number ,
+    barrowedAmount : number ,
     collectedFromHelp  :number ,
     officeExpence : number ,
     personalExpence  : number ,
@@ -17,8 +17,7 @@ export type dataType = {
     helpingAmount : number ,
     collectedAmount : number ,
     balanceWantToCollect : number ,
-    barrowedAmount_2  :number ,
-    returnedAmount : number ,
+    investment : number ,
     wantToPay : number ,
 }
 
@@ -34,27 +33,39 @@ export type tableFormValue = {
     firstObject :  {
         officeExpence: number  ,
         personalExpence: number  ,
-        returnBarrowed: number  ,
-        helpAmount: number  ,
-        total_1: number  ,
+        returnBarrowed: number  ,//// S
+        helpAmount: number  ,///// D
+        investment : number ,
+        total: number  ,
     } 
      
     secondObject : {
         officeIncome: number  ,
-        barrowedAmount_1: number  ,
+        barrowedAmount: number  ,///// A
         collectedFromHelp: number  ,
-        total_2: number  ,
+        total: number  ,
     } ,
     
     thirdObject : {
-        helpingAmount: number  ,
+        helpAmount: number  ,//// D
         collectedAmount: number  ,
         balanceWantToCollect: number  ,    
     }
     
     fourthObject : {
-        barrowedAmount_2: number  ,
-        returnedAmount: number  ,
+        barrowedAmount: number  , ///// A
+        returnBarrowed: number  , //// S
         wantToPay: number  ,
     }   
+}
+
+export type studentForm = {
+    joiningDate : Date ,
+    name : string , 
+    course : string ,
+    batchNumber : string ,
+    referenceNumber : string ,
+    phoneNumber : number ,
+    email : string ,
+    isGotCertification : string
 }

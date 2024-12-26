@@ -3,6 +3,7 @@ import type { dataType, tableFormValue } from '@/type';
 import '../CSS/Table.css'
 import { onMount } from 'svelte';
 import toast, { Toaster } from 'svelte-french-toast';
+  import Calculator from './Calculator.svelte';
 
 export let data  : dataType;
 export let totalExpence  : number;
@@ -22,37 +23,38 @@ let formValue : tableFormValue = {
       personalExpence: 0  ,
       returnBarrowed: 0  ,
       helpAmount: 0  ,
-      total_1: 0  ,
+      investment : 0 ,
+      total: 0  ,
     } ,
 
     secondObject : {
       officeIncome: 0  ,
-      barrowedAmount_1: 0  ,
+      barrowedAmount: 0  ,
       collectedFromHelp: 0  ,
-      total_2: 0  ,
+      total: 0  ,
     } ,
     
     thirdObject : {
-      helpingAmount: 0  ,
+      helpAmount: 0  ,
       collectedAmount: 0  ,
       balanceWantToCollect: 0  ,
     } ,
     
     fourthObject : {
-      barrowedAmount_2: 0  ,
-      returnedAmount: 0  ,
+      barrowedAmount: 0  ,
+      returnBarrowed: 0  ,
       wantToPay: 0  ,
     }
 }
 
 $:if( formValue.firstObject ) 
 {
-  formValue.firstObject.total_1 = 0;
+  formValue.firstObject.total = 0;
   for (const key in formValue.firstObject) 
   {
-    if (formValue.firstObject.hasOwnProperty(key) && key !== "total_1") 
+    if (formValue.firstObject.hasOwnProperty(key) && key !== "total") 
     {
-      formValue.firstObject.total_1 += formValue.firstObject[key] ;
+      formValue.firstObject.total += formValue.firstObject[key] ;
     }
   }
   // totalExpence = data.totalExpence;
@@ -62,38 +64,40 @@ $:if( formValue.firstObject )
 
 $:if( formValue.secondObject ) 
 {
-  formValue.secondObject.total_2 = 0;
+  formValue.secondObject.total = 0;
   for (const key in formValue.secondObject) 
   {
-    if (formValue.secondObject.hasOwnProperty(key) && key !== "total_2")
+    if (formValue.secondObject.hasOwnProperty(key) && key !== "total")
     {
-      formValue.secondObject.total_2 += formValue.secondObject[key] ;
+      formValue.secondObject.total += formValue.secondObject[key] ;
     }
   }
 }
 
 $:if(formValue.thirdObject)
 {
-  if(formValue.thirdObject.helpingAmount < formValue.thirdObject.collectedAmount)
+  if(formValue.thirdObject.helpAmount < formValue.thirdObject.collectedAmount)
   {
     toast.error("The amount collected exceeds the amount borrowed.")
-    // formValue.thirdObject.helpingAmount = data.helpingAmount ;
+    // formValue.thirdObject.helpAmount = data.helpAmount ;
     // formValue.thirdObject.collectedAmount = data.collectedAmount ;
 
     // Need to command
-    formValue.thirdObject.helpingAmount = 0;
+    formValue.thirdObject.helpAmount = 0;
     formValue.thirdObject.collectedAmount = 0 ;
   }
-  formValue.thirdObject.balanceWantToCollect =  formValue.thirdObject.helpingAmount -  formValue.thirdObject.collectedAmount ;
+  formValue.thirdObject.balanceWantToCollect =  formValue.thirdObject.helpAmount -  formValue.thirdObject.collectedAmount ;
 }
 
 $:if(formValue.fourthObject)
 {
-  if(formValue.fourthObject.returnedAmount > formValue.fourthObject.barrowedAmount_2)
+  if(formValue.fourthObject.returnBarrowed > formValue.fourthObject.barrowedAmount)
   {
-    toast.error("The amount collected exceeds the amount borrowed.")
+    toast.error("The returned amount exceeds the amount borrowed.")
+    formValue.fourthObject.barrowedAmount  = 0
+    formValue.fourthObject.returnBarrowed = 0;
   }
-  formValue.fourthObject.wantToPay = formValue.fourthObject.barrowedAmount_2 - formValue.fourthObject.returnedAmount ;
+  formValue.fourthObject.wantToPay = formValue.fourthObject.barrowedAmount - formValue.fourthObject.returnBarrowed ;
 }
 
 function handleSubmit() {
@@ -111,46 +115,61 @@ function handleSubmit() {
         <tr>
           <td class="left">Office expence</td>
           <td class="right">
-            {#if isEditing}
+            <!-- {#if isEditing}
               <input type="number" bind:value={formValue.firstObject.officeExpence} />
             {:else}
               {formValue.firstObject.officeExpence}
-            {/if}
+            {/if} -->
+            {formValue.firstObject.officeExpence}
           </td>
         </tr>
         <tr>
           <td class="left">Personal expence</td>
           <td class="right">
-            {#if isEditing}
+            <!-- {#if isEditing}
               <input type="number" bind:value={formValue.firstObject.personalExpence} />
             {:else}
               {formValue.firstObject.personalExpence}
-            {/if}
+            {/if} -->
+            {formValue.firstObject.personalExpence}
           </td>
         </tr>
         <tr>
           <td class="left">Return barrowed</td>
           <td class="right">
-            {#if isEditing}
+            <!-- {#if isEditing}
               <input type="number" bind:value={formValue.firstObject.returnBarrowed} />
             {:else}
               {formValue.firstObject.returnBarrowed}
-            {/if}
+            {/if} -->
+            {formValue.firstObject.returnBarrowed}
           </td>
         </tr>
         <tr>
           <td class="left">Help amount</td>
           <td class="right">
-            {#if isEditing}
+            <!-- {#if isEditing}
               <input type="number" bind:value={formValue.firstObject.helpAmount} />
             {:else}
               {formValue.firstObject.helpAmount}
-            {/if}
+            {/if} -->
+            {formValue.firstObject.helpAmount}
+          </td>
+        </tr>
+        <tr>
+          <td class="left">Investment</td>
+          <td class="right">
+            <!-- {#if isEditing}
+              <input type="number" bind:value={formValue.firstObject.investment} />
+            {:else}
+              {formValue.firstObject.investment}
+            {/if} -->
+            {formValue.firstObject.investment}
           </td>
         </tr>
         <tr>
           <td class="left">Total</td>
-          <td class="right">{formValue.firstObject.total_1}</td>
+          <td class="right">{formValue.firstObject.total}</td>
         </tr>
       </table>
     </div>
@@ -160,36 +179,39 @@ function handleSubmit() {
         <tr>
           <td class="left">Office income</td>
           <td class="right">
-            {#if isEditing}
+            <!-- {#if isEditing}
               <input type="number" bind:value={formValue.secondObject.officeIncome} />
             {:else}
               {formValue.secondObject.officeIncome}
-            {/if}
+            {/if} -->
+            {formValue.secondObject.officeIncome}
           </td>
         </tr>
         <tr>
           <td class="left">Barrowed amount</td>
           <td class="right">
-            {#if isEditing}
-              <input type="number" bind:value={formValue.secondObject.barrowedAmount_1} />
+            <!-- {#if isEditing}
+              <input type="number" bind:value={formValue.secondObject.barrowedAmount} />
             {:else}
-              {formValue.secondObject.barrowedAmount_1}
-            {/if}
+              {formValue.secondObject.barrowedAmount}
+            {/if} -->
+            {formValue.secondObject.barrowedAmount}
           </td>
         </tr>
         <tr>
           <td class="left">Collected from help</td>
           <td class="right">
-            {#if isEditing}
+            <!-- {#if isEditing}
               <input type="number" bind:value={formValue.secondObject.collectedFromHelp} />
             {:else}
               {formValue.secondObject.collectedFromHelp}
-            {/if}
+            {/if} -->
+            {formValue.secondObject.collectedFromHelp}
           </td>
         </tr>
         <tr>
           <td class="left">Total</td>
-          <td class="right">{formValue.secondObject.total_2}</td>
+          <td class="right">{formValue.secondObject.total}</td>
         </tr>
       </table>
     </div>
@@ -199,52 +221,52 @@ function handleSubmit() {
         <tr>
           <td class="left">Helping amount</td>
           <td class="right">
-            {#if isEditing}
-              <input type="number" bind:value={formValue.thirdObject.helpingAmount} />
+            <!-- {#if isEditing}
+              <input type="number" bind:value={formValue.thirdObject.helpAmount} />
             {:else}
-              {formValue.thirdObject.helpingAmount}
-            {/if}
+              {formValue.thirdObject.helpAmount}
+            {/if} -->
+            {formValue.thirdObject.helpAmount}
           </td>
         </tr>
         <tr>
           <td class="left">Collected amount</td>
           <td class="right">
-            {#if isEditing}
+            <!-- {#if isEditing}
               <input type="number" bind:value={formValue.thirdObject.collectedAmount} />
             {:else}
               {formValue.thirdObject.collectedAmount}
-            {/if}
+            {/if} -->
+            {formValue.thirdObject.collectedAmount}
           </td>
         </tr>
-        <tr>
+        <tr class="separate">
           <td class="left">Balance want to collect</td>
           <td class="right">
               {formValue.thirdObject.balanceWantToCollect}
           </td>
         </tr>
-      </table>
-    </div>
 
-    <div class="col-lg-3 mb-3">
-      <table>
         <tr>
           <td class="left">Barrowed amount</td>
           <td class="right">
-            {#if isEditing}
-              <input type="number" bind:value={formValue.fourthObject.barrowedAmount_2} />
+            <!-- {#if isEditing}
+              <input type="number" bind:value={formValue.fourthObject.barrowedAmount} />
             {:else}
-              {formValue.fourthObject.barrowedAmount_2}
-            {/if}
+              {formValue.fourthObject.barrowedAmount}
+            {/if} -->
+            {formValue.fourthObject.barrowedAmount}
           </td>
         </tr>
         <tr>
           <td class="left">Returned amount</td>
           <td class="right">
-            {#if isEditing}
-              <input type="number" bind:value={formValue.fourthObject.returnedAmount} />
+            <!-- {#if isEditing}
+              <input type="number" bind:value={formValue.fourthObject.returnBarrowed} />
             {:else}
-              {formValue.fourthObject.returnedAmount}
-            {/if}
+              {formValue.fourthObject.returnBarrowed}
+            {/if} -->
+            {formValue.fourthObject.returnBarrowed}
           </td>
         </tr>
         <tr>
@@ -254,19 +276,26 @@ function handleSubmit() {
           </td>
         </tr>
       </table>
+    </div>
 
-      <div class="edit mt-3 mb-3">
+    <div class="col-lg-3 mt-3 mb-3 Calculator">
+      <Calculator/>
+
+      <!-- <div class="edit mt-3 mb-3">
         <button class="editButton" on:click={handleSubmit}>
           {isEditing ? "Save" : "Edit"} 
         </button>
-      </div>
+      </div> -->
 
     </div>
   </div>
 </main>
 
 <style>
-.right input {
+/* .right input {
   width: 100%;
-}
+} */
+tr.separate {
+    border-bottom: 2px solid #000000;
+  }
 </style>
