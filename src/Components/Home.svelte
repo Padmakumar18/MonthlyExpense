@@ -16,6 +16,9 @@
     typeOfType : ""
   }
 
+  let student : string = "" ; // Need to change string[] for students list
+  let showStudentForm : string = "existingStudent" ;
+
   let balance: number = 0;
 
   let profit: number = 0;
@@ -130,23 +133,23 @@
                 bind:value={formValue.typeOfType}
                 required >
               <option value="" selected>Select option</option>
-              {#if formValue.type == "Income"}    
-              <optgroup label="Fees">
-                <option value="studentFee">Student fee </option>
-                <option value="clientFee">Client fee</option>
-              </optgroup>      
-              <optgroup label="Others">
-                <option value="officeIncome">Office income </option>
-                <option value="barrowedAmount">Barrowed amount </option>
-                <option value="collectedFromHelp">Collected from help </option>
-              </optgroup>      
-              {:else}
-                <option value="officeExpence">Office expence</option>
-                <option value="personalExpence">Personal expence</option>
-                <option value="returnBarrowed">Return barrowed</option>
-                <option value="helpingAmount">Helping amount</option>
-                <option value="investment">Investment</option>
-              {/if}
+                {#if formValue.type == "Income"}    
+                <optgroup label="Fees">
+                  <option value="studentFee">Student fee </option>
+                  <option value="clientFee">Client fee</option>
+                </optgroup>      
+                <optgroup label="Others">
+                  <option value="officeIncome">Office income </option>
+                  <option value="barrowedAmount">Barrowed amount </option>
+                  <option value="collectedFromHelp">Collected from help </option>
+                </optgroup>      
+                {:else}
+                  <option value="officeExpence">Office expence</option>
+                  <option value="personalExpence">Personal expence</option>
+                  <option value="returnBarrowed">Return barrowed</option>
+                  <option value="helpingAmount">Helping amount</option>
+                  <option value="investment">Investment</option>
+                {/if}
               </select>
             </div>
 
@@ -159,10 +162,38 @@
                 bind:value={formValue.subject}
                 placeholder="Subject....." required></textarea>
             </div>
+
             {#if formValue.type == "Income" && formValue.typeOfType == "studentFee"}
               <div class="col-lg-12 mt-3">
-                <StudentForm />
+                <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off" on:click={()=>{showStudentForm = "existingStudent"}} checked={showStudentForm == "existingStudent"}>
+                <label class="btn btn-outline-success" for="success-outlined">Existing student</label>
+
+                <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off"  on:click={()=>{showStudentForm = "newStudent"}} checked ={showStudentForm == "newStudent"}>
+                <label class="btn btn-outline-success" for="danger-outlined">New Student</label>
               </div>
+
+              {#if showStudentForm == "newStudent" }
+                <div class="col-lg-12 mt-3">
+                  <StudentForm /> 
+                </div>
+              {:else}
+                <div class="col-lg-12 mt-3">
+                  <label class="mb-1" for="student">Student</label>
+                  <select
+                    name="student"
+                    class="form-select"
+                    aria-label="Default select example"
+                    bind:value={student}
+                    required >
+                      <option value="" selected>Select an option</option>
+                      <option value="officeExpence">Office expence</option>
+                      <option value="personalExpence">Personal expence</option>
+                      <option value="returnBarrowed">Return barrowed</option>
+                      <option value="helpingAmount">Helping amount</option>
+                      <option value="investment">Investment</option>
+                  </select>
+                </div>
+              {/if}
             {/if}
 
             <div class="buttons mt-3">

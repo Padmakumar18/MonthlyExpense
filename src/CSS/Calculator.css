@@ -1,0 +1,22 @@
+
+.numbers {
+    width: 22%;
+    border: none;
+    background-color: white;
+    margin: 1px;
+    border-radius: 8px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+.operator {
+    width: 25%;
+    background-color: rgb(120, 122, 236);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    color: white;
+    border: none;
+    margin: 1px;
+    border-radius: 8px;
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
