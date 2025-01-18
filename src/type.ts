@@ -1,24 +1,47 @@
 export type dataType = {
-    date : Date ,
-    subject : string ,
-    amount : number ,
-    type : string ,
-    typeOfType : string ,
-    previousMonthAmount : number , 
-    profit : number , 
-    officeIncome : number ,
-    barrowedAmount : number ,
-    collectedFromHelp  :number ,
-    officeExpence : number ,
-    personalExpence  : number ,
-    returnBarrowed : number ,
-    helpAmount : number ,
-    totalExpence : number ,
-    helpingAmount : number ,
-    collectedAmount : number ,
-    balanceWantToCollect : number ,
-    investment : number ,
-    wantToPay : number ,
+    date: Date;
+    subject: string;
+    amount: number;
+    income_or_expense: string;
+    type_two: string;
+    office_expense: number;
+    personal_expense: number;
+    return_barrowed: number;
+    help_amount: number;
+    total: number;
+    office_income: number;
+    barrowed_amount: number;
+    collected_from_help: number;
+    profit: number;
+    total_expense: number;
+    balance: number;
+};
+
+export type tableFormValue = {
+    firstObject :  {
+        officeExpence: number  ,
+        personalExpence: number  ,
+        investment : number ,
+        total: number  ,
+    } 
+     
+    secondObject : {
+        officeIncome: number  ,
+        collectedFromHelp: number  ,
+        total: number  ,
+    } ,
+    
+    thirdObject : {
+        helpAmount: number  ,
+        collectedAmount: number  ,
+        balanceWantToCollect: number  ,    
+    }
+    
+    fourthObject : {
+        barrowedAmount: number  ,
+        returnBarrowed: number  ,
+        wantToPay: number  ,
+    }   
 }
 
 export type homeFormValues = {
@@ -27,36 +50,6 @@ export type homeFormValues = {
     amount : number ,
     type : string ,
     typeOfType : string
-}
-
-export type tableFormValue = {
-    firstObject :  {
-        officeExpence: number  ,
-        personalExpence: number  ,
-        returnBarrowed: number  ,//// S
-        helpAmount: number  ,///// D
-        investment : number ,
-        total: number  ,
-    } 
-     
-    secondObject : {
-        officeIncome: number  ,
-        barrowedAmount: number  ,///// A
-        collectedFromHelp: number  ,
-        total: number  ,
-    } ,
-    
-    thirdObject : {
-        helpAmount: number  ,//// D
-        collectedAmount: number  ,
-        balanceWantToCollect: number  ,    
-    }
-    
-    fourthObject : {
-        barrowedAmount: number  , ///// A
-        returnBarrowed: number  , //// S
-        wantToPay: number  ,
-    }   
 }
 
 export type studentForm = {

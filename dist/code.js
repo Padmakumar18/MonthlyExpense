@@ -11,7 +11,7 @@ function doGet( request )
     return template;
 }
 
-function getSheetRows(sheetName)
+function getSheetRows(sheetName) 
 {
     let sheetData = sheet.getSheetByName(sheetName).getDataRange().getDisplayValues();
     let headers = sheetData[0];
@@ -29,14 +29,35 @@ function getSheetRows(sheetName)
     return data;
 }
 
-function getUser(userEmail , userPassword)
-{
+function getUser(userEmail, userPassword) {
     let links = getSheetRows('Users');
 
-    if(links[0].Email == userEmail && links[0].Password == userPassword)
-    {
-        return true ;
+    if (links[0].Email == userEmail && links[0].Password == userPassword) {
+        sheet.getSheetByName('Users').getRange(2, 3).setValue(new Date());
+        return true;
     }
-    console.log(links)
     return false;
+}
+
+function getData() {
+    let data = [];
+    let sheetNames = ['Data', 'Help', 'Barrowed'];
+    sheetNames.forEach((element) => {
+        let value = getLastRowWithHeaders(element)
+        data.push(value);
+    });
+
+    return JSON.stringify(data);;
+}
+
+function getLastRowWithHeaders(sheetName) {
+    let targetSheet = sheet.getSheetByName(sheetName);
+    let headers = targetSheet.getRange(1, 1, 1, targetSheet.getLastColumn()).getValues()[0];
+    let lastRowNum = targetSheet.getLastRow();
+    let lastRowData = targetSheet.getRange(lastRowNum, 1, 1, targetSheet.getLastColumn()).getValues()[0];
+    let rowDataWithHeaders = {};
+    headers.forEach((header, index) => {
+        rowDataWithHeaders[header] = lastRowData[index] || null;
+    });
+    return rowDataWithHeaders;
 }

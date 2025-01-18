@@ -5,31 +5,20 @@ import { onMount } from 'svelte';
 import toast, { Toaster } from 'svelte-french-toast';
   import Calculator from './Calculator.svelte';
 
-export let data  : dataType;
+export let data : dataType;
 export let totalExpence  : number;
-export let profit  : number =0;
+export let profit  : number = 0; 
 export let balance  : number = 0;
-
-onMount(()=>{
-  console.log("data")
-  console.log(data)
-})
-
-let isEditing  : boolean = false ;
-
 let formValue : tableFormValue = {
     firstObject : {
       officeExpence: 0  ,
       personalExpence: 0  ,
-      returnBarrowed: 0  ,
-      helpAmount: 0  ,
       investment : 0 ,
       total: 0  ,
     } ,
 
     secondObject : {
       officeIncome: 0  ,
-      barrowedAmount: 0  ,
       collectedFromHelp: 0  ,
       total: 0  ,
     } ,
@@ -47,6 +36,42 @@ let formValue : tableFormValue = {
     }
 }
 
+$: if (data) {
+    console.log("Editing formValue with data");
+
+    // Mapping data to formValue's firstObject
+    formValue.firstObject.officeExpence = data.office_expense;
+    formValue.firstObject.personalExpence = data.personal_expense;
+    formValue.firstObject.investment = 0; // Assuming no direct mapping for investment in data
+    formValue.firstObject.total = data.total_expense;
+
+    // Mapping data to formValue's secondObject
+    formValue.secondObject.officeIncome = data.office_income;
+    formValue.secondObject.collectedFromHelp = data.collected_from_help;
+    formValue.secondObject.total = data.total;
+
+    // Mapping data to formValue's thirdObject
+    formValue.thirdObject.helpAmount = data.help_amount;
+    formValue.thirdObject.collectedAmount = data.collected_from_help; // Assuming it's equivalent
+    formValue.thirdObject.balanceWantToCollect = 0; // Assuming no direct mapping in data
+
+    // Mapping data to formValue's fourthObject
+    formValue.fourthObject.barrowedAmount = data.barrowed_amount;
+    formValue.fourthObject.returnBarrowed = data.return_barrowed;
+    formValue.fourthObject.wantToPay = 0; // Assuming no direct mapping in data
+
+    console.log("Updated formValue:", formValue);
+  }
+
+
+onMount(()=> {
+  console.log("on mounnt")
+  formValue.fourthObject.barrowedAmount = data.barrowed_amount ;
+  console.log(formValue.fourthObject.barrowedAmount);
+})
+
+let isEditing  : boolean = false ;
+
 $:if( formValue.firstObject ) 
 {
   formValue.firstObject.total = 0;
@@ -57,6 +82,7 @@ $:if( formValue.firstObject )
       formValue.firstObject.total += formValue.firstObject[key] ;
     }
   }
+  formValue.firstObject.total += formValue.fourthObject.returnBarrowed + formValue.thirdObject.helpAmount ;
   // totalExpence = data.totalExpence;
   totalExpence = 0;
   totalExpence += formValue.firstObject.officeExpence + formValue.firstObject.personalExpence ;
@@ -72,6 +98,7 @@ $:if( formValue.secondObject )
       formValue.secondObject.total += formValue.secondObject[key] ;
     }
   }
+  formValue.secondObject.total += formValue.fourthObject.barrowedAmount ;
 }
 
 $:if(formValue.thirdObject)
@@ -142,7 +169,7 @@ function handleSubmit() {
             {:else}
               {formValue.firstObject.returnBarrowed}
             {/if} -->
-            {formValue.firstObject.returnBarrowed}
+            {formValue.fourthObject.returnBarrowed}
           </td>
         </tr>
         <tr>
@@ -153,7 +180,7 @@ function handleSubmit() {
             {:else}
               {formValue.firstObject.helpAmount}
             {/if} -->
-            {formValue.firstObject.helpAmount}
+            {formValue.thirdObject.helpAmount}
           </td>
         </tr>
         <tr>
@@ -195,7 +222,7 @@ function handleSubmit() {
             {:else}
               {formValue.secondObject.barrowedAmount}
             {/if} -->
-            {formValue.secondObject.barrowedAmount}
+            {formValue.fourthObject.barrowedAmount}
           </td>
         </tr>
         <tr>

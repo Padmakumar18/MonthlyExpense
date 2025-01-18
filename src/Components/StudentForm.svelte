@@ -81,7 +81,15 @@ function clear() {
 
         <div class="col-lg-3 ">
           <label class="mb-1" for="isGotCertification">Got certification <span> *</span></label>
-          <input class="form-control" type="text" name="isGotCertification" bind:value={formValue.isGotCertification} required />
+          <select
+            name="student"
+            class="form-select"
+            aria-label="Default select example"
+            bind:value={formValue.isGotCertification}
+            required >
+              <option value="" selected>Select an option</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
         </div>
 
         <div class="buttons mt-3">

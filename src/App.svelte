@@ -15,15 +15,17 @@
   let password: string = "";
 
   onMount(() => {
+    loading = true ;
     let email = localStorage.getItem("email") || "";
     let password = localStorage.getItem("password") || "";
 
     if (email !== "" && password !== "") {
       handleLogin({ detail: { email, password } });
-    }
+    } 
     else {
       loading = false ;
     }
+    
   });
 
   async function handleLogin(event?: { detail: { email: string; password: string }}) {
@@ -43,16 +45,16 @@
     else {
       toast.error("Invalid Mail or Password")
     }
-
     loading = false;
   }
   </script>
 
 <main>
+  <!-- <div class = "{ !showLogin ? 'house' : '' }" > -->
   <div class = "{ !showLogin ? 'house' : 'house' }" >
-    <Home bind:loading bind:showLogin/>
+    <Home bind:loading bind:showLogin />
     <Toaster />
-    <!-- {#if loading}
+    {#if loading}
       <div class="loadingComponent">
         <Loading />
       </div>
@@ -62,7 +64,7 @@
       {:else}
         <Home bind:loading bind:showLogin/>
       {/if}
-    {/if} -->
+    {/if}
   </div>
 </main>
 
