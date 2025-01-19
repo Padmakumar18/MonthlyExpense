@@ -6,6 +6,7 @@
   import StudentForm from "./StudentForm.svelte";
   import StudentsListButton from "./StudentsListButton.svelte";
   import { runGas } from "@/gas";
+  import toast from "svelte-french-toast";
 
   export let loading: boolean;
   export let showLogin: boolean;
@@ -135,8 +136,16 @@
   }
 
 
-  function handleFormSubmit() {
+  async function handleFormSubmit() {
     console.dir(formValue,{depth:null})
+    let result = await runGas("appendForm","",formValue);
+    if(result) {
+      toast.success("Successfully submitted") ;
+      clearForm();
+    }
+    else {
+      toast.error("Try again !")
+    }
   }
 
   function clearForm() {
@@ -244,12 +253,14 @@
                     <option value="barrowedAmount">Barrowed amount </option>
                     <option value="collectedFromHelp">Collected from help </option>
                   </optgroup>      
-                  {:else}
+                  {:else if formValue.type == "Expense"}
                     <option value="officeExpence">Office expence</option>
                     <option value="personalExpence">Personal expence</option>
                     <option value="returnBarrowed">Return barrowed</option>
                     <option value="helpingAmount">Helping amount</option>
                     <option value="investment">Investment</option>
+                  {:else}
+                    <option value="">Select Income / Expense</option>
                   {/if}
                 </select>
               </div>

@@ -61,3 +61,8 @@ function getLastRowWithHeaders(sheetName) {
     });
     return rowDataWithHeaders;
 }
+
+function appendForm(formValue) {
+    console.log("formValue")
+    console.log(formValue)
+}
